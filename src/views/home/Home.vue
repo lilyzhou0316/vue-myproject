@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-15 18:12:06
- * @LastEditTime: 2020-07-17 17:57:12
+ * @LastEditTime: 2020-07-17 20:14:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/my-project/src/views/home/Home.vue
@@ -12,18 +12,21 @@
       <div slot="center">购物车</div>
     </nav-bar>
     <home-swiper :banners="banners"></home-swiper>
+    <home-recommend :recommends="recommends"></home-recommend>
   </div>
 </template>
 
 <script>
 import NavBar from "components/common/navbar/NavBar";
 import HomeSwiper from "./childComps/HomeSwiper";
+import HomeRecommend from "./childComps/HomeRecommend";
 import { getHomeMultiData } from "network/home";
 export default {
   name: "Home",
   components: {
     NavBar,
-    HomeSwiper
+    HomeSwiper,
+    HomeRecommend
   },
   data() {
     return {
