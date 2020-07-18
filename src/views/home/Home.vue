@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-15 18:12:06
- * @LastEditTime: 2020-07-17 21:27:12
+ * @LastEditTime: 2020-07-17 22:04:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/my-project/src/views/home/Home.vue
@@ -14,34 +14,96 @@
     <home-swiper :banners="banners"></home-swiper>
     <home-recommend :recommends="recommends"></home-recommend>
     <home-fasion></home-fasion>
+    <tab-control
+      class="tab-control"
+      :titles="['流行', '新款', '精选']"
+    ></tab-control>
     <ul>
       <li>1</li>
       <li>2</li>
       <li>3</li>
       <li>4</li>
       <li>5</li>
-      <li>6</li>
-      <li>7</li>
-      <li>8</li>
-      <li>9</li>
+
+      <li>10</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+
+      <li>10</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+
+      <li>10</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+
+      <li>10</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+
+      <li>10</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+
+      <li>10</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+
+      <li>10</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+
+      <li>10</li>
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+      <li>5</li>
+
       <li>10</li>
     </ul>
   </div>
 </template>
 
 <script>
-import NavBar from "components/common/navbar/NavBar";
+// 子组件
 import HomeSwiper from "./childComps/HomeSwiper";
 import HomeRecommend from "./childComps/HomeRecommend";
 import HomeFasion from "./childComps/HomeFasion";
+// 公共组件
+import NavBar from "components/common/navbar/NavBar";
+import TabControl from "components/content/tabcontrol/TabControl";
+//网络请求
 import { getHomeMultiData } from "network/home";
 export default {
   name: "Home",
   components: {
-    NavBar,
     HomeSwiper,
     HomeRecommend,
-    HomeFasion
+    HomeFasion,
+    NavBar,
+    TabControl
   },
   data() {
     return {
@@ -81,5 +143,10 @@ export default {
   right: 0;
   top: 0;
   z-index: 100;
+}
+.tab-control {
+  position: sticky;
+  top: 43px;
+  background-color: #fff;
 }
 </style>
