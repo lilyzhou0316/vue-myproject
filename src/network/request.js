@@ -1,9 +1,17 @@
+/*
+ * @Author: your name
+ * @Date: 2020-07-17 16:23:58
+ * @LastEditTime: 2020-07-20 14:06:12
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit,
+ * @FilePath: /vue/shopping-app/src/network/request.js
+ */
 import axios from 'axios'
 
 export function request(config) {
   // 1.创建axios的实例
   const instance = axios.create({
-    baseURL: 'http://123.207.32.32:8000',
+    baseURL: 'http://152.136.185.210:8000/api/n3', //'http://123.207.32.32:8000',
     timeout: 5000
   })
 
@@ -12,7 +20,7 @@ export function request(config) {
   instance.interceptors.request.use(config => {
     return config
   }, err => {
-    // console.log(err);
+    console.log(err);
   })
 
   // 2.2.响应拦截

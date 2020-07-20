@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-17 21:30:50
- * @LastEditTime: 2020-07-17 21:59:21
+ * @LastEditTime: 2020-07-20 15:03:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/shopping-app/src/components/content/tabcontrol/TabControl.vue
@@ -53,6 +53,8 @@ export default {
   display: flex;
   text-align: center;
   font-size: 15px;
+  z-index: 99;
+  background-color: #fff;
 }
 
 .tab-item {

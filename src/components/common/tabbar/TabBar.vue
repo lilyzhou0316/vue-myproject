@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-15 16:59:49
- * @LastEditTime: 2020-07-15 17:31:17
+ * @LastEditTime: 2020-07-18 14:53:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/my-project/src/components/tabbar/TabBar.vue
@@ -15,7 +15,7 @@
 <script>
 export default {
   name: "TabBar",
-  components: {},
+  components: {}
 };
 </script>
 
@@ -28,5 +28,6 @@ export default {
   right: 0;
   bottom: 0;
   box-shadow: 0 -1px 1px rgba(100, 100, 100, 0.1);
+  z-index: 99;
 }
 </style>

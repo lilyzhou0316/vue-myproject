@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-17 16:27:39
- * @LastEditTime: 2020-07-17 16:33:57
+ * @LastEditTime: 2020-07-20 14:22:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/shopping-app/src/network/home.js
@@ -16,5 +16,14 @@ export function getHomeMultiData() {
   return request({ //返回的是一个promise对象
     url: '/home/multidata'
   })
+}
 
+export function getHomeGoods(type, page) {
+  return request({ //返回的是一个promise对象
+    url: '/home/data',
+    params: {
+      type,
+      page
+    }
+  })
 }
