@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-20 18:58:32
- * @LastEditTime: 2020-07-20 22:00:18
+ * @LastEditTime: 2020-07-20 22:14:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/shopping-app/src/components/common/betterscroll/Scroll.vue
@@ -47,15 +47,16 @@ export default {
       pullUpLoad: this.pullUpLoad,
       click: true
     });
-    
+
     //2.监听滚动到底部的上拉事件
     this.scroll.on("pullingUp", () => {
-      console.log("上拉加载更多");
-      setTimeout(() => {
-        this.scroll.finishPullUp(); //表示当前的pullingup事件已经执行完，可以执行下一次了
-      }, 2000);
+      //console.log("上拉加载更多");
+      this.$emit("pullingUp");
+      // setTimeout(() => {
+      //   this.scroll.finishPullUp(); //表示当前的pullingup事件已经执行完，可以执行下一次了
+      // }, 2000);
     });
-    
+
     //3.监听实时的滚动位置
     this.scroll.on("scroll", position => {
       //console.log(position);

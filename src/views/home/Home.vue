@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-15 18:12:06
- * @LastEditTime: 2020-07-20 21:58:44
+ * @LastEditTime: 2020-07-20 22:22:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/my-project/src/views/home/Home.vue
@@ -17,6 +17,7 @@
       :probe-type="probeType"
       :pull-up-load="pullUpLoad"
       @scroll="showBT"
+      @pullingUp="loadMore"
     >
       <home-swiper :banners="banners"></home-swiper>
       <home-recommend :recommends="recommends"></home-recommend>
@@ -153,6 +154,11 @@ export default {
       //监听滚动位置
       //console.log(position);
       this.showBackTop = position.y < -1000;
+    },
+    loadMore() {
+      this.dealHomeGoods(this.currentType);
+      this.$refs.scroll.scroll.finishPullUp();
+      //this.$refs.scroll.scroll.refresh(); //解决滚动途中卡顿问题
     }
   }
 };
