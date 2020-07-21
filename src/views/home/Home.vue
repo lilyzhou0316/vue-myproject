@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-15 18:12:06
- * @LastEditTime: 2020-07-20 14:05:54
+ * @LastEditTime: 2020-07-20 21:58:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/my-project/src/views/home/Home.vue
@@ -11,76 +11,28 @@
     <nav-bar class="home-nav">
       <div slot="center">购物车</div>
     </nav-bar>
-    <home-swiper :banners="banners"></home-swiper>
-    <home-recommend :recommends="recommends"></home-recommend>
-    <home-fasion></home-fasion>
-    <tab-control class="tab-control" :titles="['流行', '新款', '精选']"></tab-control>
-    <goods-list :goodslist="goods['pop'].list"></goods-list>
-    <ul>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-
-      <li>10</li>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-
-      <li>10</li>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-
-      <li>10</li>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-
-      <li>10</li>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-
-      <li>10</li>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-
-      <li>10</li>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-
-      <li>10</li>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-
-      <li>10</li>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-
-      <li>10</li>
-    </ul>
+    <scroll
+      class="content"
+      ref="scroll"
+      :probe-type="probeType"
+      :pull-up-load="pullUpLoad"
+      @scroll="showBT"
+    >
+      <home-swiper :banners="banners"></home-swiper>
+      <home-recommend :recommends="recommends"></home-recommend>
+      <home-fasion></home-fasion>
+      <tab-control
+        class="tab-control"
+        :titles="['流行', '新款', '精选']"
+        @itmClick="itmClick"
+      >
+      </tab-control>
+      <goods-list :goodslist="showGoods"></goods-list>
+    </scroll>
+    <!-- <div @click="btClick">
+      <back-top></back-top>
+    </div> -->
+    <back-top @click.native="btClick" v-show="showBackTop"></back-top>
   </div>
 </template>
 
@@ -93,6 +45,8 @@ import HomeFasion from "./childComps/HomeFasion";
 import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabcontrol/TabControl";
 import GoodsList from "components/content/goods/GoodsList";
+import Scroll from "components/common/betterscroll/Scroll";
+import BackTop from "components/content/backtop/BackTop";
 //网络请求
 import { getHomeMultiData, getHomeGoods } from "network/home";
 
@@ -104,7 +58,9 @@ export default {
     HomeFasion,
     NavBar,
     TabControl,
-    GoodsList
+    GoodsList,
+    Scroll,
+    BackTop
   },
   data() {
     return {
@@ -115,12 +71,24 @@ export default {
         pop: { page: 0, list: [] },
         new: { page: 0, list: [] },
         sell: { page: 0, list: [] }
-      }
+      },
+      currentType: "pop",
+      probeType: 3,
+      pullUpLoad: true,
+      showBackTop: false
     };
+  },
+  computed: {
+    // 直接当做普通属性调用不加括号
+    // 任何data中数据变化立即重新计算
+    // 计算属性会缓存
+    showGoods() {
+      return this.goods[this.currentType].list;
+    }
   },
   created() {
     //组件创建完成就会调用created方法
-    //所以需要在这里发送home页的数据请求
+    //所以需要在这里发送home页的数据请求,将所有数据都获取
     //但需要在methods里封装一下请求和处理数据的方法，而不是直接在
     //created里写，这样让created里的逻辑更清晰
     this.dealHomeMultiData();
@@ -129,6 +97,7 @@ export default {
     this.dealHomeGoods("sell");
   },
   methods: {
+    //所有的数据请求方法
     dealHomeMultiData() {
       getHomeMultiData().then(
         //请求轮播图和推荐的数据
@@ -146,12 +115,44 @@ export default {
       //请求商品数据
       const page = this.goods[type].page + 1;
       getHomeGoods(type, page).then(res => {
-        //将拿到的数据放到对应的list里
+        //将拿到的所有数据放到对应的list里
         //不能直接赋值，因为后面的数据会覆盖前面的数据，而不是拼接
         this.goods[type].list.push(...res.data.list);
         //当前页码加1
         this.goods[type].page += 1;
       });
+    },
+
+    //当tab被点击时发生的事件
+    itmClick(index) {
+      //console.log(index);
+      switch (index) {
+        case 0:
+          this.currentType = "pop";
+          break;
+        case 1:
+          this.currentType = "new";
+          break;
+        case 2:
+          this.currentType = "sell";
+          break;
+      }
+    },
+
+    //监听backtop按钮的点击事件
+    //自定义组件标签不能直接监听原生事件，需要加上.native才可以
+    //或者给组件包上一个外层div
+    btClick() {
+      //console.log("back to top");
+      //通过this.$refs.scroll拿到scroll组件对象，它里面包含一个scroll变量
+      //然后通过该scroll变量调用betterscroll的scrollTo方法
+      //该方法可以滚动到指定位置
+      this.$refs.scroll.scroll.scrollTo(0, 0, 500);
+    },
+    showBT(position) {
+      //监听滚动位置
+      //console.log(position);
+      this.showBackTop = position.y < -1000;
     }
   }
 };
@@ -161,6 +162,8 @@ export default {
 #home {
   /* 由于顶部导航条固定所以其它组件需要往下移动44px */
   padding-top: 44px;
+  /* vh为视口高度 */
+  height: 100vh;
 }
 .home-nav {
   background-color: pink;
@@ -177,5 +180,10 @@ export default {
   position: sticky;
   top: 43px;
   background-color: #fff;
+  /* z-index: 1000; */
+}
+.content {
+  height: calc(100% - 49px);
+  overflow: hidden;
 }
 </style>
