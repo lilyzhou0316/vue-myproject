@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-20 18:58:32
- * @LastEditTime: 2020-07-20 22:14:18
+ * @LastEditTime: 2020-07-21 15:50:08
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/shopping-app/src/components/common/betterscroll/Scroll.vue
@@ -49,20 +49,31 @@ export default {
     });
 
     //2.监听滚动到底部的上拉事件
-    this.scroll.on("pullingUp", () => {
-      //console.log("上拉加载更多");
-      this.$emit("pullingUp");
-      // setTimeout(() => {
-      //   this.scroll.finishPullUp(); //表示当前的pullingup事件已经执行完，可以执行下一次了
-      // }, 2000);
-    });
+    if (this.pullUpLoad) {
+      this.scroll.on("pullingUp", () => {
+        //console.log("上拉加载更多");
+        this.$emit("pullingUp");
+        // setTimeout(() => {
+        //   this.scroll.finishPullUp(); //表示当前的pullingup事件已经执行完，可以执行下一次了
+        // }, 2000);
+      });
+    }
 
     //3.监听实时的滚动位置
-    this.scroll.on("scroll", position => {
-      //console.log(position);
-      //this.position = position;
-      this.$emit("scroll", position);
-    });
+    if (this.probeType === 2 || this.probeType === 3) {
+      this.scroll.on("scroll", position => {
+        //console.log(position);
+        //this.position = position;
+        this.$emit("scroll", position);
+      });
+    }
+  },
+  methods: {
+    refresh() {
+      //console.log("______");
+      //先判断scroll对象是否已经存在，再调用方法
+      this.scroll && this.scroll.refresh();
+    }
   }
 };
 </script>

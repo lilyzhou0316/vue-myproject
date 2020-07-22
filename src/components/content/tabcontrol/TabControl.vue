@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-17 21:30:50
- * @LastEditTime: 2020-07-20 15:26:42
+ * @LastEditTime: 2020-07-21 17:13:11
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/shopping-app/src/components/content/tabcontrol/TabControl.vue
@@ -43,7 +43,7 @@ export default {
   methods: {
     itmClick(index) {
       this.currentIndex = index; //点击谁，谁的index就是currentIndex
-      this.$emit("itmClick",index);
+      this.$emit("itmClick", index);
     }
   }
 };
@@ -54,7 +54,7 @@ export default {
   display: flex;
   text-align: center;
   font-size: 15px;
-  z-index: 99;
+  /* z-index: 99; */
   background-color: #fff;
 }
 

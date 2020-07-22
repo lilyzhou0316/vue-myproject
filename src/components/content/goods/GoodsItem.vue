@@ -1,18 +1,18 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-18 14:22:58
- * @LastEditTime: 2020-07-20 15:05:42
+ * @LastEditTime: 2020-07-21 14:18:02
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/shopping-app/src/components/content/goods/GoodsItem.vue
---> 
+-->
 <template>
   <div class="goods-item">
-    <img :src="goodsitem.show.img" />
+    <img :src="goodsitem.show.img" @load="imgLoad" />
     <div class="goods-info">
-      <p>{{goodsitem.title}}</p>
-      <span class="price">价格：{{goodsitem.price}}</span>
-      <span class="collection">收藏：{{goodsitem.cfav}}</span>
+      <p>{{ goodsitem.title }}</p>
+      <span class="price">价格：{{ goodsitem.price }}</span>
+      <span class="collection">收藏：{{ goodsitem.cfav }}</span>
     </div>
   </div>
 </template>
@@ -23,7 +23,16 @@ export default {
   data() {
     return {};
   },
-  props: ["goodsitem"]
+  props: ["goodsitem"],
+  methods: {
+    //监听每一张图片是否加载完
+    imgLoad() {
+      //console.log("加载完成");
+      //1.先在main.js中给vue添加一个bus属性，通过事件总线bus发射事件，在其它组件就可以通过$bus.$on监听到了
+      //2.也可以用vuex设置一个变量
+      this.$bus.$emit("itmImgLoad");
+    }
+  }
 };
 </script>
 
