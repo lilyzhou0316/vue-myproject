@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-21 20:45:49
- * @LastEditTime: 2020-07-23 17:02:08
+ * @LastEditTime: 2020-07-23 19:32:05
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/shopping-app/src/views/detail/Detail.vue
@@ -36,8 +36,9 @@
       <goods-list :goodslist="recommends" ref="recommends"></goods-list>
     </scroll>
 
-    <detail-bottom-bar></detail-bottom-bar>
+    <detail-bottom-bar @addToCart="addToCart"></detail-bottom-bar>
     <back-top class="back-top" v-show="showBackTop"></back-top>
+    
   </div>
 </template>
 
@@ -206,6 +207,19 @@ export default {
 
       //3.判断是否显示backtop按钮
       this.showBackTop = position.y < -1000;
+    },
+    addToCart() {
+      //console.log("add to cart");
+      //1.获取商品信息
+      const product = {};
+      product.image = this.topImages[0];
+      product.title = this.goodsDetail.title;
+      product.desc = this.goodsDetail.desc;
+      product.price = this.goodsDetail.realPrice;
+      product.iid = this.iid;
+      //2.将商品加入添加到购物车
+      //将product传给store里的addProduct方法中
+      this.$store.dispatch("addProduct", product);
     }
   }
 };
