@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-23 18:34:16
- * @LastEditTime: 2020-07-23 19:44:52
+ * @LastEditTime: 2020-07-23 20:02:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/shopping-app/src/store/index.js
@@ -10,6 +10,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import mutations from './mutations';
 import actions from './actions';
+import getters from './getters';
 
 //1.安装插件
 Vue.use(Vuex)
@@ -22,7 +23,8 @@ const state = {
 const store = new Vuex.Store({
   state,
   mutations,
-  actions
+  actions,
+  getters
 })
 
 //3.挂载vue实例上
