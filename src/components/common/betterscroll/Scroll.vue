@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-20 18:58:32
- * @LastEditTime: 2020-07-21 15:50:08
+ * @LastEditTime: 2020-07-23 13:52:56
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/shopping-app/src/components/common/betterscroll/Scroll.vue
@@ -70,9 +70,17 @@ export default {
   },
   methods: {
     refresh() {
-      //console.log("______");
+      //console.log("refresh");
       //先判断scroll对象是否已经存在，再调用方法
       this.scroll && this.scroll.refresh();
+    },
+    scrollTo(x, y, time) {
+      //console.log("______");
+      //先判断scroll对象是否已经存在，再调用方法
+      this.scroll && this.scroll.scrollTo(x, y, time);
+    },
+    getCurrentY() {
+      return this.scroll && this.scroll.y;
     }
   }
 };

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-21 15:32:36
- * @LastEditTime: 2020-07-21 15:33:51
+ * @LastEditTime: 2020-07-22 20:02:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/shopping-app/src/common/utils.js
@@ -27,4 +27,28 @@ export function debounce(func, wait) {
       func.apply(this, args);
     }, wait);
   };
+}
+
+export function formatDate(date, fmt) {
+  if (/(y+)/.test(fmt)) {
+    fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+  }
+  let o = {
+    'M+': date.getMonth() + 1,
+    'd+': date.getDate(),
+    'h+': date.getHours(),
+    'm+': date.getMinutes(),
+    's+': date.getSeconds()
+  };
+  for (let k in o) {
+    if (new RegExp(`(${k})`).test(fmt)) {
+      let str = o[k] + '';
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : padLeftZero(str));
+    }
+  }
+  return fmt;
+}
+
+function padLeftZero(str) {
+  return ('00' + str).substr(str.length);
 }

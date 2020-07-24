@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-07-15 13:31:49
- * @LastEditTime: 2020-07-17 15:36:27
+ * @LastEditTime: 2020-07-21 20:51:17
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/my-project/src/router/index.js
@@ -19,6 +19,7 @@ const Home = () => import('views/home/Home.vue')
 const Category = () => import('views/category/Category.vue')
 const Shopcart = () => import('views/shopcart/Shopcart.vue')
 const Profile = () => import('views/profile/Profile.vue')
+const Detail = () => import('views/detail/Detail.vue')
 
 //2.创建路由对象
 const routes = [{
@@ -41,6 +42,10 @@ const routes = [{
   {
     path: '/profile',
     component: Profile
+  },
+  {
+    path: '/detail/:id',
+    component: Detail
   }
 ]
 

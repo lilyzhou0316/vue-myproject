@@ -1,19 +1,25 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-18 14:22:39
- * @LastEditTime: 2020-07-20 15:05:25
+ * @LastEditTime: 2020-07-22 20:36:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/shopping-app/src/components/content/goods/GoodsList.vue
---> 
+-->
 <template>
   <div class="goods-list">
-    <goods-item v-for="(item,index) in goodslist" :key="index" :goodsitem="item"></goods-item>
+    <goods-item
+      v-for="(item, index) in goodslist"
+      :key="index"
+      :goodsitem="item"
+    >
+    </goods-item>
   </div>
 </template>
 
 <script>
 import GoodsItem from "./GoodsItem.vue";
+
 export default {
   name: "GoodsList",
   data() {

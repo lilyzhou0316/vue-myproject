@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-15 18:12:06
- * @LastEditTime: 2020-07-21 17:32:24
+ * @LastEditTime: 2020-07-23 16:48:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/my-project/src/views/home/Home.vue
@@ -57,11 +57,12 @@ import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabcontrol/TabControl";
 import GoodsList from "components/content/goods/GoodsList";
 import Scroll from "components/common/betterscroll/Scroll";
-import BackTop from "components/content/backtop/BackTop";
+//import BackTop from "components/content/backtop/BackTop";
 //网络请求
 import { getHomeMultiData, getHomeGoods } from "network/home";
 //工具
-import { debounce } from "common/utils";
+// import { debounce } from "common/utils";
+import { imgLoadListenerMixin, backTopMinxin } from "common/mixin";
 
 export default {
   name: "Home",
@@ -72,8 +73,8 @@ export default {
     NavBar,
     TabControl,
     GoodsList,
-    Scroll,
-    BackTop
+    Scroll
+    //BackTop
   },
   data() {
     return {
@@ -88,9 +89,10 @@ export default {
       currentType: "pop",
       probeType: 3,
       pullUpLoad: true,
-      showBackTop: false,
+      //showBackTop: false,由mixins提供
       tabOffSetTop: 0,
-      activeTabControl: false
+      activeTabControl: false,
+      saveY: 0
     };
   },
   computed: {
@@ -107,7 +109,7 @@ export default {
       getHomeMultiData().then(
         //请求轮播图和推荐的数据
         res => {
-          console.log(res);
+          //console.log(res);
           this.banners = res.data.banner.list;
           this.recommends = res.data.recommend.list;
         },
@@ -146,16 +148,6 @@ export default {
       this.$refs.tabControl1.currentIndex = index;
     },
 
-    //监听backtop按钮的点击事件
-    //自定义组件标签不能直接监听原生事件，需要加上.native才可以
-    //或者给组件包上一个外层div
-    btClick() {
-      //console.log("back to top");
-      //通过this.$refs.scroll拿到scroll组件对象，它里面包含一个scroll变量
-      //然后通过该scroll变量调用betterscroll的scrollTo方法
-      //该方法可以滚动到指定位置
-      this.$refs.scroll.scroll.scrollTo(0, 0, 500);
-    },
     showBT(position) {
       //监听滚动位置
       //console.log(position);
@@ -177,6 +169,7 @@ export default {
       this.tabOffSetTop = this.$refs.tabControl.$el.offsetTop;
     }
   },
+  mixins: [imgLoadListenerMixin, backTopMinxin],
   created() {
     //组件创建完成就会调用created方法
     //所以需要在这里发送home页的数据请求,将所有数据都获取
@@ -189,16 +182,22 @@ export default {
     this.dealHomeGoods("new");
     this.dealHomeGoods("sell");
   },
-  mounted() {
-    //1.图片加载完成的事件监听
-    const refresh = debounce(this.$refs.scroll.refresh, 200);
-    //通过bus监听item组件中的图片加载完成
-    this.$bus.$on("itmImgLoad", () => {
-      //console.log('加载完成');
-      //解决图片卡顿问题  this.$refs.scroll &&
-      refresh();
-    });
-  }
+  mounted() {},
+  activated() {
+    //进入当前组件时会激活
+    //回到离开当前页面时所在的位置
+    //console.log(this.saveY);
+    this.$refs.scroll.scrollTo(0, this.saveY, 10);
+    //避免出现自动回到顶部的问题
+    this.$refs.scroll.refresh();
+  },
+  deactivated() {
+    //离开当前组件时会激活
+    //记录离开时当前页面所在的位置
+    //console.log(this.$refs.scroll.scroll.y);
+    this.saveY = this.$refs.scroll.getCurrentY();
+  },
+  destroyed() {}
 };
 </script>
 
