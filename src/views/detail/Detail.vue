@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-21 20:45:49
- * @LastEditTime: 2020-07-23 19:32:05
+ * @LastEditTime: 2020-07-25 16:54:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/shopping-app/src/views/detail/Detail.vue
@@ -38,7 +38,6 @@
 
     <detail-bottom-bar @addToCart="addToCart"></detail-bottom-bar>
     <back-top class="back-top" v-show="showBackTop"></back-top>
-    
   </div>
 </template>
 
@@ -54,6 +53,7 @@ import DetailBottomBar from "./childComps/DetailBottomBar";
 
 import GoodsList from "components/content/goods/GoodsList";
 import Scroll from "components/common/betterscroll/Scroll";
+// import Toast from "components/common/toast/Toast";
 
 import {
   getDetail,
@@ -78,6 +78,7 @@ export default {
     DetailBottomBar,
     GoodsList,
     Scroll
+    //Toast
   },
   data() {
     return {
@@ -93,6 +94,9 @@ export default {
       getOffsetTopY: null,
       positionY: 0,
       currentIndex: -1
+      //不封装情况下toast组件需要传入的参数
+      // isShow: false,
+      // message: ""
     };
   },
   mixins: [imgLoadListenerMixin, backTopMinxin],
@@ -219,7 +223,21 @@ export default {
       product.iid = this.iid;
       //2.将商品加入添加到购物车
       //将product传给store里的addProduct方法中
-      this.$store.dispatch("addProduct", product);
+      //addProduct会返回一个promise对象回来
+      this.$store.dispatch("addProduct", product).then(res => {
+        //3.显示添加购物车成功
+        //console.log(res);
+        //方案1:不封装情况下使用toast组件
+        // this.isShow = true;
+        // this.message = res;
+        // setTimeout(() => {
+        //   this.isShow = false;
+        //   this.message = "";
+        // }, 1500);
+
+        //方案2.封装toast组件到Vue的原型上（show方法来自于toast组件）
+        this.$toast.show(res);
+      });
     }
   }
 };

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-23 21:04:57
- * @LastEditTime: 2020-07-23 21:32:43
+ * @LastEditTime: 2020-07-25 14:47:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/shopping-app/src/views/shopcart/childComps/CheckButton.vue
@@ -21,13 +21,7 @@
 <script>
 export default {
   name: "CheckButton",
-  props: {
-    value: {
-      //这里的value来自于父组件中v-model的绑定
-      type: Boolean,
-      default: true
-    }
-  },
+  props: ["value"],
   data: function() {
     return {
       checked: this.value

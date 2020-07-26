@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-23 21:34:02
- * @LastEditTime: 2020-07-23 23:04:11
+ * @LastEditTime: 2020-07-25 17:11:32
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/shopping-app/src/views/shopcart/childComps/CartBottomBar.vue
@@ -9,10 +9,15 @@
 <template>
   <div class="cart-bottom-bar">
     <div class="checked">
-      <check-button class="check-button"></check-button>
+      <check-button
+        class="check-button"
+        @checkBtnClick="checkBtnClick"
+        v-model="isSelectAll"
+      >
+      </check-button>
       <span>全选</span>
       <span class="total-price">合计：{{ totalprice }}</span>
-      <span class="pay">结账 ({{ checkLength }})</span>
+      <span class="pay" @click="payBtnClick">结账 ({{ checkLength }})</span>
     </div>
   </div>
 </template>
@@ -44,10 +49,48 @@ export default {
     },
     checkLength() {
       return this.$store.getters.cartList.filter(item => item.checked).length;
+    },
+    isSelectAll() {
+      //如果有没被选中的商品，则isSelectAll为true
+      //还要考虑购物车为空的情况
+      if (this.$store.getters.cartList.length === 0) {
+        return false;
+      } else {
+        //console.log(!this.$store.getters.cartList.find(item => !item.checked));
+        return !this.$store.getters.cartList.find(item => !item.checked);
+      }
     }
   },
   components: {
     CheckButton
+  },
+  methods: {
+    checkBtnClick() {
+      //console.log("click");
+      if (!this.isSelectAll) {
+        //如果有商品没被选中
+        //遍历cartList，让每一个商品的checked都为true
+        this.$store.state.cartList.forEach(item => {
+          item.checked = true;
+        });
+      } else {
+        //如果所有商品都被选中了，则让每一个商品的checked都为false
+        this.$store.state.cartList.forEach(item => {
+          item.checked = false;
+        });
+      }
+    },
+    payBtnClick() {
+      // console.log(
+      //   this.$store.getters.cartList.filter(item => item.checked).length
+      // );
+      if (
+        //如果没有商品被选中
+        this.$store.getters.cartList.filter(item => item.checked).length === 0
+      ) {
+        this.$toast.show("请选择需要购买的商品", 2000);
+      }
+    }
   }
 };
 </script>

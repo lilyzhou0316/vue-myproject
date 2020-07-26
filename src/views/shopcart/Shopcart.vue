@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-15 18:12:27
- * @LastEditTime: 2020-07-23 22:03:38
+ * @LastEditTime: 2020-07-25 17:04:44
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/my-project/src/views/shopcart/ShopCart.vue
@@ -16,7 +16,7 @@
       <cart-list></cart-list>
     </scroll>
 
-    <cart-bottom-bar class="bottom-bar"></cart-bottom-bar>
+    <cart-bottom-bar class="bottom-bar" > </cart-bottom-bar>
   </div>
 </template>
 
@@ -41,7 +41,8 @@ export default {
   },
   activated() {
     this.$refs.scroll.refresh();
-  }
+  },
+  methods: {}
 };
 </script>
 
