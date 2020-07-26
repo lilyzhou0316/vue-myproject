@@ -1,14 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2020-07-18 14:22:58
- * @LastEditTime: 2020-07-22 21:07:06
+ * @LastEditTime: 2020-07-25 19:04:19
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: /vue/shopping-app/src/components/content/goods/GoodsItem.vue
 -->
 <template>
   <div class="goods-item" @click="goodsItmClick">
-    <img :src="getImg" @load="imgLoad" />
+    <img v-lazy="getImg" @load="imgLoad" />
     <div class="goods-info">
       <p>{{ goodsitem.title }}</p>
       <span class="price">价格：{{ goodsitem.price }}</span>
